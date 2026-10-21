@@ -4,7 +4,6 @@ Source collection: https://editor.p5js.org/Jeremylym/collections/b3MRGTDb6
 
 | Display title | Original title | p5.js | Source |
 |---|---|---|---|
-| Yellow Study | demo.yellow.sketch | 2.3.2 | [Editor](https://editor.p5js.org/Jeremylym/sketches/mJ8mFv2oO) |
 | Self Portrait | self portrait | 2.3.2 | [Editor](https://editor.p5js.org/Jeremylym/sketches/tQujCTqIr) |
 | Generative Portrait | Self portrait | 2.3.2 | [Editor](https://editor.p5js.org/Jeremylym/sketches/I4KBEj1a1) |
 | Portrait in Motion | portrait | 2.3.3 | [Editor](https://editor.p5js.org/Jeremylym/sketches/nJwP0IJkB) |
@@ -20,4 +19,4 @@ The original p5.js Editor projects are not modified. No Kinetic Typography sourc
 
 ## Validation
 
-All seven local sketch pages were opened and rendered in a browser. Particle Brush pointer interaction, Particle Network click interaction, and DADA dragging and Space-to-clear were checked. DADA save-to-file was not tested. Fixed-size original canvases may extend beyond narrow phone viewports; the gallery itself is responsive.
+All six local sketch pages were opened and rendered in a browser. Particle Brush pointer interaction, Particle Network click interaction, and DADA dragging and Space-to-clear were checked. DADA save-to-file was not tested. Fixed-size original canvases may extend beyond narrow phone viewports; the gallery itself is responsive.

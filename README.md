@@ -1,6 +1,6 @@
 # Yuming Liang — Creative Coding I
 
-A simple static coursework portfolio with seven original p5.js sketches.
+A simple static coursework portfolio with six original p5.js sketches.
 
 ## View
 
@@ -14,10 +14,10 @@ No build step or package installation is required.
 ## Files
 
 - `index.html`: gallery, descriptions, and project links
-- `projects/`: seven static project detail pages
+- `projects/`: six static project detail pages
 - `style.css`: dark responsive layout
 - `images/`: screenshots captured from the actual sketches
-- `sketches/`: seven independent original sketches and collage assets
+- `sketches/`: six independent original sketches and collage assets
 - `vendor/`: matching p5.js runtimes
 - `projects.json`: project metadata and original source links
 - `PROJECT-INVENTORY.md`: provenance and integration changes
