@@ -14,6 +14,7 @@ No build step or package installation is required.
 ## Files
 
 - `index.html`: gallery, descriptions, and project links
+- `projects/`: seven static project detail pages
 - `style.css`: dark responsive layout
 - `images/`: screenshots captured from the actual sketches
 - `sketches/`: seven independent original sketches and collage assets
@@ -25,7 +26,7 @@ To add a project, create its sketch folder, capture a cover, and add an article 
 
 ## Interaction
 
-Select a cover to open a standalone sketch in a new tab. Source Code opens the original p5.js Editor project. The homepage runs no sketches. Close the artwork tab to stop its runtime.
+Hover or focus a cover to reveal its title and View project prompt. Select a cover to open an editorial detail page with a description, interaction guide, and run link. The run link opens the original standalone sketch in a new tab. Source Code opens the original p5.js Editor project. The homepage runs no sketches. Close the artwork tab to stop its runtime.
 
 This simplified version replaces the earlier experimental gallery UI. Original course files and the professional portfolio are untouched.
 
