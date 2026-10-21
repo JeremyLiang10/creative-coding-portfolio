@@ -1,0 +1,72 @@
+[
+  {
+    "id": "mJ8mFv2oO",
+    "slug": "yellow-study",
+    "title": "Yellow Study",
+    "originalName": "demo.yellow.sketch",
+    "description": "A simple study of a yellow canvas.",
+    "tags": "COLOR / FIRST EXPERIMENT",
+    "p5": "2.3.2",
+    "source": "https://editor.p5js.org/Jeremylym/sketches/mJ8mFv2oO"
+  },
+  {
+    "id": "tQujCTqIr",
+    "slug": "self-portrait",
+    "title": "Self Portrait",
+    "originalName": "self portrait",
+    "description": "A portrait composed with basic geometric shapes.",
+    "tags": "DRAWING / SHAPES",
+    "p5": "2.3.2",
+    "source": "https://editor.p5js.org/Jeremylym/sketches/tQujCTqIr"
+  },
+  {
+    "id": "I4KBEj1a1",
+    "slug": "generative-portrait",
+    "title": "Generative Portrait",
+    "originalName": "Self portrait",
+    "description": "Randomized marks and overlapping shapes build an evolving portrait.",
+    "tags": "RANDOMNESS / LAYERING",
+    "p5": "2.3.2",
+    "source": "https://editor.p5js.org/Jeremylym/sketches/I4KBEj1a1"
+  },
+  {
+    "id": "nJwP0IJkB",
+    "slug": "portrait-in-motion",
+    "title": "Portrait in Motion",
+    "originalName": "portrait",
+    "description": "A fading portrait made from shifting lines, rectangles, and color.",
+    "tags": "GENERATIVE DRAWING / MOTION",
+    "p5": "2.3.3",
+    "source": "https://editor.p5js.org/Jeremylym/sketches/nJwP0IJkB"
+  },
+  {
+    "id": "xSAf7nBqZ",
+    "slug": "particle-network",
+    "title": "Particle Network",
+    "originalName": "Jeremy work3",
+    "description": "Moving particles connect when nearby. Click to introduce more particles.",
+    "tags": "PARTICLES / CONNECTIONS",
+    "p5": "2.3.2",
+    "source": "https://editor.p5js.org/Jeremylym/sketches/xSAf7nBqZ"
+  },
+  {
+    "id": "q9yrpQBSG",
+    "slug": "particle-brush",
+    "title": "Particle Brush",
+    "originalName": "Jeremy assignment3",
+    "description": "Move across the grid to disturb the lines. Click to push nearby particles outward.",
+    "tags": "INTERACTIVE GRID / PARTICLES",
+    "p5": "2.3.2",
+    "source": "https://editor.p5js.org/Jeremylym/sketches/q9yrpQBSG"
+  },
+  {
+    "id": "U3Hd-DtXm",
+    "slug": "dada-collage",
+    "title": "DADA Collage",
+    "originalName": "Assignment4",
+    "description": "Drag to compose with image and text fragments. Click to scatter; Space clears; S saves.",
+    "tags": "COLLAGE / INTERACTION",
+    "p5": "2.3.4",
+    "source": "https://editor.p5js.org/Jeremylym/sketches/U3Hd-DtXm"
+  }
+]
