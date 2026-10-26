@@ -21,3 +21,5 @@ Clap recognition estimates a gesture from two-dimensional hand positions, not so
 The classroom sketch and CSS are copied unchanged from the local v0.7.1 version. The gallery adds a detail page, camera permission delegation, and an illustrated cover. That cover is an illustration, not a runtime screenshot.
 
 MediaPipe asset license and provenance: `vendor/hands/LICENSE` and `vendor/hands/NOTICE.md`.
+
+Classroom v0.7.2: The full 4:3 canvas now scales to the viewport space remaining after the header and controls. Resizing affects display size only; the 960×720 drawing coordinates and interactions are unchanged.

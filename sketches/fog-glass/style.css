@@ -1,15 +1,16 @@
 :root { color-scheme: dark; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #dce6e9; background: #141e25; }
 * { box-sizing: border-box; }
-body { margin: 0; min-height: 100vh; padding: 30px 5vw; display: grid; place-items: center; }
-main { width: min(100%, 1000px); }
-header { display: flex; align-items: end; justify-content: space-between; padding-bottom: 20px; gap: 18px; }
+body { margin: 0; height: 100vh; height: 100dvh; padding: 16px 3vw; display: grid; place-items: center; }
+main { width: min(100%, 1200px); height: 100%; min-height: 0; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.canvas-space { min-width: 0; min-height: 0; display: flex; align-items: center; justify-content: center; }
+header { display: flex; align-items: end; justify-content: space-between; padding-bottom: 12px; gap: 18px; }
 .eyebrow { margin: 0 0 8px; font-size: 10px; letter-spacing: .2em; color: #9aaeb9; }
 h1 { margin: 0; font-size: clamp(24px, 4vw, 36px); font-weight: 450; letter-spacing: .08em; }
 h1 span { font-size: 15px; letter-spacing: .01em; font-weight: 400; color: #a3b5be; margin-left: 12px; }
 .tag, .hint { font-size: 12px; color: #9aaeb9; }
 #canvas-holder { position: relative; overflow: hidden; border: 1px solid #536a78; border-radius: 5px; background: #263b4a; }
 canvas { display: block; width: 100% !important; height: auto !important; touch-action: none; }
-footer { display: flex; justify-content: space-between; align-items: center; gap: 18px; padding-top: 15px; }
+footer { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding-top: 12px; }
 footer p { font-size: 13px; line-height: 1.6; margin: 0 0 5px; }
 .actions { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
 button { color: #e2edf0; background: #263a47; border: 1px solid #617784; border-radius: 4px; padding: 10px 13px; cursor: pointer; white-space: nowrap; }
@@ -18,7 +19,7 @@ button:disabled { opacity: .5; cursor: wait; }
 button:focus-visible, input:focus-visible { outline: 2px solid #f4dbac; outline-offset: 4px; }
 label { font-size: 12px; color: #adbec7; white-space: nowrap; }
 input { accent-color: #bfdae4; vertical-align: middle; }
-@media (max-width: 720px) { body { padding: 22px 16px; } footer { align-items: start; flex-direction: column; } .tag { display: none; } }
+@media (max-width: 720px) { body { padding: 12px; } footer { align-items: start; flex-direction: column; gap: 8px; } .tag { display: none; } }
 
 .material-badge { position: absolute; z-index: 1; top: 16px; right: 16px; display: grid; gap: 4px; min-width: 112px; padding: 12px 16px; color: #edf5f7; background: rgba(20, 35, 44, .86); border: 1px solid rgba(191, 218, 228, .32); border-radius: 6px; pointer-events: none; }
 .material-label { color: #b7cbd5; font-size: 11px; letter-spacing: .08em; }
@@ -26,3 +27,15 @@ input { accent-color: #bfdae4; vertical-align: middle; }
 #material-description { font-size: 12px; color: #c4d5dd; }
 .material-toast { position: absolute; z-index: 2; left: 50%; top: 45%; transform: translate(-50%, -50%); padding: 16px 26px; border: 1px solid rgba(191, 218, 228, .45); border-radius: 7px; background: rgba(20, 35, 44, .9); color: #f0f7f9; font-size: clamp(18px, 3vw, 26px); text-align: center; white-space: nowrap; pointer-events: none; }
 @media (max-width: 480px) { .material-badge { top: 10px; right: 10px; padding: 8px 12px; min-width: 96px; } .material-badge strong { font-size: 17px; } }
+
+/* Fit the full 4:3 canvas and controls inside the standalone or iframe viewport. */
+@media (max-height: 700px) {
+  body { padding-top: 10px; padding-bottom: 10px; }
+  header { padding-bottom: 8px; }
+  .eyebrow { margin-bottom: 4px; }
+  h1 { font-size: 24px; }
+  footer { padding-top: 8px; gap: 8px; }
+  footer p { font-size: 11px; line-height: 1.4; margin-bottom: 3px; }
+  #diagnostic { display: none; }
+  button { padding: 8px 10px; }
+}

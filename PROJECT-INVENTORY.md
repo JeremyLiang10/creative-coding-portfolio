@@ -29,3 +29,7 @@ All six local sketch pages were opened and rendered in a browser. Particle Brush
 - New gallery card, metadata, and detail page. The iframe delegates camera access; a full-page alternative is linked.
 - The Fog Glass cover is a purpose-made illustration, not a runtime screenshot. Earlier covers remain unchanged.
 - JavaScript syntax, synthetic gesture state tests, local model file serving, and static link checks are separate from real-camera validation. Classroom clap success rate and published camera permission behavior remain unverified.
+
+## Fog Glass viewport fix (v0.7.2)
+
+The classroom page uses a bounded viewport layout and ResizeObserver to fit the entire canvas above its controls. A Fog Glass-only detail stylesheet fits the embed beneath the gallery header. Shared gallery styles and the six earlier sketches are unchanged.

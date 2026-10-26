@@ -37,6 +37,16 @@ let fogElapsed = 0;
 function setup() {
   const canvas = createCanvas(W, H);
   canvas.parent('canvas-holder');
+  // 保留 960×720 绘画坐标，只按剩余的显示空间等比缩放。
+  const canvasSpace = document.querySelector('.canvas-space');
+  const holder = document.getElementById('canvas-holder');
+  const fitCanvas = () => {
+    const available = canvasSpace.getBoundingClientRect();
+    const displayWidth = Math.max(0, Math.floor(Math.min(available.width - 2, (available.height - 2) * W / H)));
+    holder.style.width = `${displayWidth + 2}px`;
+  };
+  new ResizeObserver(fitCanvas).observe(canvasSpace);
+  fitCanvas();
   pixelDensity(1);
   fog = createGraphics(W, H);
   scene = createGraphics(W, H);
@@ -178,7 +188,7 @@ function draw() {
   } else previousMouse = null;
 
   if (millis() - lastDiagnostic > 500) {
-    document.getElementById('diagnostic').textContent = `v0.7.1 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
+    document.getElementById('diagnostic').textContent = `v0.7.2 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
     lastDiagnostic = millis();
   }
   const hint = document.getElementById('gesture-status');

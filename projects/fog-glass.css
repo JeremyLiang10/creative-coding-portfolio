@@ -1,0 +1,7 @@
+/* Scoped to Fog Glass; other project pages keep their existing layout. */
+.fog-project .project-page { padding-top: 14px; }
+.fog-project .project-page > .detail-note { margin: 0 0 12px; font-size: 12px; line-height: 1.5; }
+.fog-project .interactive-stage { height: calc(100vh - 180px); height: calc(100svh - 180px); min-height: 280px; max-height: 1000px; }
+@media (max-width: 560px) {
+  .fog-project .interactive-stage { height: calc(100vh - 210px); height: calc(100svh - 210px); min-height: 280px; }
+}
