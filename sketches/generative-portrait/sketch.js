@@ -25,7 +25,7 @@ let palette2 = [
 ];
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(800, 600);
   background(bgColor);
 }
 

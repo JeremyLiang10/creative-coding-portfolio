@@ -36,3 +36,6 @@ The classroom page uses a bounded viewport layout and ResizeObserver to fit the 
 - Fog Glass v0.7.3: relaxed visual-clap sampling, overlap recovery, and replay tests. Real-camera recognition rate remains unmeasured.
 
 - Fog Glass v0.7.4: stable status rows and button widths; browser layout regression passed across five iframe sizes and six UI states per size.
+
+## Portrait framing adjustment
+Self Portrait retains its original 500×500 canvas. Generative Portrait uses an 800×600 canvas so its fixed-coordinate eyes remain balanced. Both canvases are centered and scaled proportionally within the available viewport using sketch-local CSS. Classroom originals are unchanged. Portrait in Motion was removed from the portfolio at the owner’s request.
