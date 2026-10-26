@@ -58,5 +58,15 @@
     "tags": "COLLAGE / INTERACTION",
     "p5": "2.3.4",
     "source": "https://editor.p5js.org/Jeremylym/sketches/U3Hd-DtXm"
+  },
+  {
+    "id": "fog-glass-classroom",
+    "slug": "fog-glass",
+    "title": "Fog Glass",
+    "originalName": "Fog Glass",
+    "description": "Wipe misted glass with your hands. A clap switches tools as droplets slowly leave their own trails.",
+    "tags": "HAND TRACKING / INTERACTION",
+    "p5": "1.11.11",
+    "source": "https://github.com/JeremyLiang10/creative-coding-portfolio/tree/main/sketches/fog-glass"
   }
 ]

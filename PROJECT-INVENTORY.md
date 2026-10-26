@@ -20,3 +20,12 @@ The original p5.js Editor projects are not modified. No Kinetic Typography sourc
 ## Validation
 
 All six local sketch pages were opened and rendered in a browser. Particle Brush pointer interaction, Particle Network click interaction, and DADA dragging and Space-to-clear were checked. DADA save-to-file was not tested. Fixed-size original canvases may extend beyond narrow phone viewports; the gallery itself is responsive.
+
+## Fog Glass — classroom addition
+
+- Local source: Fog Glass v0.7.1, developed with Codex assistance; not part of the original p5.js collection.
+- Classroom `sketch.js`, `style.css`, and English `index.html` copied unchanged.
+- p5.js 1.11.11 / ml5.js 1.2.1 (CDN); local MediaPipe Hands 0.4.1675469240 assets with license and provenance notice.
+- New gallery card, metadata, and detail page. The iframe delegates camera access; a full-page alternative is linked.
+- The Fog Glass cover is a purpose-made illustration, not a runtime screenshot. Earlier covers remain unchanged.
+- JavaScript syntax, synthetic gesture state tests, local model file serving, and static link checks are separate from real-camera validation. Classroom clap success rate and published camera permission behavior remain unverified.
