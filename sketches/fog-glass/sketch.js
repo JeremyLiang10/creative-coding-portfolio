@@ -188,7 +188,7 @@ function draw() {
   } else previousMouse = null;
 
   if (millis() - lastDiagnostic > 500) {
-    document.getElementById('diagnostic').textContent = `v0.7.2 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
+    document.getElementById('diagnostic').textContent = `v0.7.3 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
     lastDiagnostic = millis();
   }
   const hint = document.getElementById('gesture-status');
@@ -249,7 +249,7 @@ function getActiveTracks(now) {
   });
 }
 
-function handSample(hand, minConfidence = HAND_MIN_CONFIDENCE) {
+function handSample(hand, minConfidence = HAND_MIN_CONFIDENCE, forGesture = false) {
   const points = hand.keypoints;
   if (!Number.isFinite(hand.confidence) || hand.confidence < minConfidence ||
       !points || points.length < 21 || !points.every(p => Number.isFinite(p.x) && Number.isFinite(p.y))) return null;
@@ -259,7 +259,7 @@ function handSample(hand, minConfidence = HAND_MIN_CONFIDENCE) {
   // 极小、退化的关键点组不参与绘画；不要求特定手势。
   if (Math.hypot(palm.x - wrist.x, palm.y - wrist.y) < .025) return null;
   const tip = normalize(points[8]);
-  if (tip.x < 0 || tip.x > 1 || tip.y < 0 || tip.y > 1) return null;
+  if (!forGesture && (tip.x < 0 || tip.x > 1 || tip.y < 0 || tip.y > 1)) return null;
   const center = [0, 5, 9, 13, 17].map(i => normalize(points[i]));
   const palmCenter = { x: center.reduce((sum, p) => sum + p.x, 0) / 5,
     y: center.reduce((sum, p) => sum + p.y, 0) / 5 };
@@ -270,7 +270,7 @@ function handSample(hand, minConfidence = HAND_MIN_CONFIDENCE) {
 function updateHandTracks(results, now) {
   const samples = results.map(hand => handSample(hand)).filter(Boolean).slice(0, 2);
   // 拍手时侧面的手置信度容易降低。手势判断与绘画过滤分开，不能把低可信点直接拿来画。
-  const gestureSamples = results.map(hand => handSample(hand, .5)).filter(Boolean).slice(0, 2);
+  const gestureSamples = results.map(hand => handSample(hand, .35, true)).filter(Boolean).slice(0, 2);
   updateClap(gestureSamples, now);
   const old = handTracks.filter(track => now - track.seen < 500);
   // 两只手的检测顺序可能交换。比较整体配对成本，用位置为主、左右手标签为辅。
@@ -303,19 +303,27 @@ function updateHandTracks(results, now) {
 
 // 摄像头只判断二维合拢/分开，不使用麦克风，也不假设能测量真实接触。
 function updateClap(samples, now) {
-  const gapLimit = Math.min(1400, Math.max(650, inferenceMs * 3));
-  function cancel() { clap.phase = 'idle'; clap.openFrames = 0; }
+  const gapLimit = Math.min(1800, Math.max(900, inferenceMs * 4));
+  const separation = samples.length === 2 ? Math.hypot(
+    samples[0].palmCenter.x - samples[1].palmCenter.x,
+    samples[0].palmCenter.y - samples[1].palmCenter.y) : null;
+  function cancel() {
+    clap = { phase: 'idle', openFrames: 0, lastSeen: now, until: 0 };
+  }
   if (clap.phase === 'cooldown') {
-    if (now < clap.until || samples.length !== 2) return;
-    const separation = Math.hypot(samples[0].palmCenter.x - samples[1].palmCenter.x,
-      samples[0].palmCenter.y - samples[1].palmCenter.y);
-    if (separation < (clap.openDistance || .3) * .6) return;
+    if (now < clap.until || separation === null ||
+        separation < Math.max(.16, (clap.openDistance || .3) * .65)) return;
     cancel();
   }
-  if (samples.length !== 2) {
-    // 只在已经观察到合拢后容许遮挡；单手消失不能独立触发拍手。
-    if ((clap.phase === 'closing' || clap.phase === 'contact') && now - clap.lastSeen < gapLimit) {
-      if (clap.phase === 'closing' && clap.lastRatio < 2.6 && clap.contraction > .25) {
+  if (separation === null) {
+    // 侧手或重叠常导致其中一只手消失。只有此前明确靠近才保留候选，
+    // 重新看到分开的双手后再确认，单手消失本身不会切换。
+    if (now - clap.lastSeen <= gapLimit) {
+      const centeredHand = samples.length === 1 && clap.midpoint &&
+        Math.hypot(samples[0].palmCenter.x - clap.midpoint.x,
+          samples[0].palmCenter.y - clap.midpoint.y) < clap.openDistance * .30;
+      if ((clap.phase === 'closing' && clap.contraction >= .18) ||
+          (clap.phase === 'open' && centeredHand)) {
         clap.phase = 'contact'; clap.started = now;
       }
       return;
@@ -323,44 +331,44 @@ function updateClap(samples, now) {
     cancel();
     return;
   }
-  const [a, b] = samples;
-  const distance = Math.hypot(a.palmCenter.x - b.palmCenter.x, a.palmCenter.y - b.palmCenter.y);
-  // 侧手拍合会使掌心尺寸缩短；固定使用分开时的尺度，避免越靠近反而计算得越远。
-  const size = Math.max(.035, (a.palmSize + b.palmSize) / 2);
-  const recent = now - clap.lastSeen < gapLimit;
-  if (clap.phase !== 'idle' && !recent) cancel();
+  if (clap.phase !== 'idle' && now - clap.lastSeen > gapLimit) cancel();
+  const size = Math.max(.035, (samples[0].palmSize + samples[1].palmSize) / 2);
   if (clap.phase === 'idle') {
-    if (distance / size > 2.5) {
+    // 不必夸张地张开双臂；连续两帧看见分开的双手即可准备。
+    if (separation > Math.max(.16, size * 1.8)) {
       clap.openFrames++;
       if (clap.openFrames >= 2) {
-        clap.phase = 'open'; clap.scale = size; clap.openDistance = distance;
+        clap.phase = 'open'; clap.scale = size; clap.openDistance = separation;
         clap.contraction = 0;
       }
     } else clap.openFrames = 0;
   }
-  const ratio = distance / (clap.scale || size);
   if (clap.phase === 'open') {
-    clap.openDistance = Math.max(clap.openDistance, distance);
-    clap.contraction = 1 - distance / clap.openDistance;
-    // 比较累计靠近程度，不再要求某一帧必须突然跳近。
-    if (clap.contraction > .18) { clap.phase = 'closing'; clap.started = now; }
+    if (separation >= clap.openDistance) {
+      clap.openDistance = separation;
+      clap.midpoint = { x: (samples[0].palmCenter.x + samples[1].palmCenter.x) / 2,
+        y: (samples[0].palmCenter.y + samples[1].palmCenter.y) / 2 };
+    }
+    clap.contraction = 1 - separation / clap.openDistance;
+    if (clap.contraction >= .18) { clap.phase = 'closing'; clap.started = now; }
   }
   if (clap.phase === 'closing') {
-    clap.contraction = 1 - distance / clap.openDistance;
-    if (ratio < 1.85 && clap.contraction > .35) {
+    clap.contraction = Math.max(clap.contraction, 1 - separation / clap.openDistance);
+    // 使用分开时的掌心尺度，并兼顾相对距离，侧手尺寸收缩不再阻止触发。
+    if ((separation / clap.scale <= 2.2 && clap.contraction >= .30) ||
+        separation <= clap.openDistance * .48) {
       finishClap(now);
       return;
-    } else if (now - clap.started > 2000 || distance > clap.openDistance * .98) cancel();
+    }
+    if (now - clap.started > 2500 || separation >= clap.openDistance * .98) cancel();
   } else if (clap.phase === 'contact') {
-    if (now - clap.started > 2000) cancel();
-    else if ((ratio < 1.85 && clap.contraction > .35) ||
-      (distance > clap.openDistance * .55 && ratio > 1.9)) {
-      // 短暂遮挡的拍合在两手重新可见时确认，不要求大幅分开。
+    if (now - clap.started > gapLimit) cancel();
+    else if (separation >= clap.openDistance * .65 ||
+             separation <= Math.max(clap.scale * 2.2, clap.openDistance * .48)) {
       finishClap(now);
       return;
     }
   }
-  clap.lastRatio = ratio;
   clap.lastSeen = now;
 }
 

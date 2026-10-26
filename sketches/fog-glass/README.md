@@ -23,3 +23,7 @@ The classroom sketch and CSS are copied unchanged from the local v0.7.1 version.
 MediaPipe asset license and provenance: `vendor/hands/LICENSE` and `vendor/hands/NOTICE.md`.
 
 Classroom v0.7.2: The full 4:3 canvas now scales to the viewport space remaining after the header and controls. Resizing affects display size only; the 960×720 drawing coordinates and interactions are unchanged.
+
+
+### v0.7.3 — Clap detection
+Gesture sampling now tolerates lower-confidence side-on hands and off-screen fingertips independently from drawing. The detector accepts a smaller starting separation, preserves an approaching/centered-hand candidate during brief overlap, and confirms it when both hands reappear. Cooldown still requires hands to separate before rearming. `node tests/fog-clap.test.cjs` replays ten synthetic gesture scenarios plus gesture/drawing filtering; these checks do not measure real-camera accuracy.
