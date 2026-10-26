@@ -35,3 +35,5 @@ All six local sketch pages were opened and rendered in a browser. Particle Brush
 The classroom page uses a bounded viewport layout and ResizeObserver to fit the entire canvas above its controls. A Fog Glass-only detail stylesheet fits the embed beneath the gallery header. Shared gallery styles and the six earlier sketches are unchanged.
 
 - Fog Glass v0.7.3: relaxed visual-clap sampling, overlap recovery, and replay tests. Real-camera recognition rate remains unmeasured.
+
+- Fog Glass v0.7.4: stable status rows and button widths; browser layout regression passed across five iframe sizes and six UI states per size.

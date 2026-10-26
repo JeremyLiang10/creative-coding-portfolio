@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Fog Glass layout regression</title>
+<style>body{font:14px monospace;background:#111;color:#eee}iframe{display:block;border:0}pre{white-space:pre-wrap}</style>
+<h1>Fog Glass: changing status must not resize the canvas</h1><pre id="result">Running…</pre>
+<iframe title="Layout test" src="../sketches/fog-glass/index.html?v=stable-1"></iframe>
+<script>
+// Development fixture only: pause animation, cycle actual UI text and tools,
+// and check the resulting browser layout. No camera or model is started.
+(async()=>{
+ const frame=document.querySelector('iframe'),out=document.querySelector('#result');
+ const wait=()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+ try{
+  for(let n=0;!frame.contentDocument?.querySelector('canvas');n++){
+   if(n>200)throw Error('Sketch did not load');
+   await new Promise(r=>setTimeout(r,100));
+  }
+  const w=frame.contentWindow,d=frame.contentDocument;w.noLoop();
+  const states=[
+   ['Enable the camera, or click and drag to try drawing.','Clap: Start with both hands apart and visible to the camera.','Enable camera'],
+   ['Camera connected. Loading hand tracking…','Clap: Ready. Bring your hands together.','Starting…'],
+   ['2 hand(s) confirmed · Wipe with your index fingers. Clap to switch tools.','Clap: Hands moving together…','Camera enabled'],
+   ['Tracking active · Show one or both hands fully and hold still briefly before moving.','Clap: Show both hands again to confirm.','Camera enabled'],
+   ['Clap gesture in progress · Bring your hands together to switch tools.','Tool switched. Separate your hands to prepare for the next clap.','Camera enabled'],
+   ['Tracking is slow. Check the camera preview in the lower-left corner.','Switched to Squeegee. Move your index finger to try it.','Retry camera']
+  ];
+  const results=[];
+  for(const [width,height] of [[1186,538],[874,538],[720,540],[334,632],[1280,720]]){
+   frame.style.width=width+'px';frame.style.height=height+'px';await wait();
+   let baseline;
+   for(const [i,[status,gesture,camera]] of states.entries()){
+    d.querySelector('#status').textContent=status;d.querySelector('#gesture-status').textContent=gesture;
+    d.querySelector('#camera-button').textContent=camera;
+    d.querySelector('#diagnostic').textContent='v0.7.4 · Camera connected · 123456 frames processed · 2 / 2 hands confirmed · 1500ms';
+    d.querySelector('#tool-button').click();await wait();
+    const c=d.querySelector('canvas').getBoundingClientRect(),footer=d.querySelector('footer').getBoundingClientRect();
+    const rect=[c.x,c.y,c.width,c.height,footer.y,footer.height];
+    if(!baseline)baseline=rect;
+    if(rect.some((v,j)=>Math.abs(v-baseline[j])>.1))throw Error(`${width}×${height}: state ${i} resized layout`);
+    if(d.documentElement.scrollHeight>height||d.documentElement.scrollWidth>width)throw Error(`${width}×${height}: page overflow`);
+    for(const p of d.querySelectorAll('footer p')){
+     if(getComputedStyle(p).display!=='none' && p.scrollHeight>p.clientHeight+1)throw Error(`${width}×${height}: clipped text ${p.id}`);
+    }
+   }
+   results.push(`PASS ${width}×${height}: 6 states, identical canvas and footer bounds, no overflow`);
+  }
+  out.textContent=results.join('\n');out.dataset.status='passed';
+ }catch(e){out.textContent='FAIL '+e.message;out.dataset.status='failed';}
+})();
+</script></html>

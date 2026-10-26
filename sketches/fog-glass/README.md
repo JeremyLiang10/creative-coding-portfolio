@@ -27,3 +27,7 @@ Classroom v0.7.2: The full 4:3 canvas now scales to the viewport space remaining
 
 ### v0.7.3 — Clap detection
 Gesture sampling now tolerates lower-confidence side-on hands and off-screen fingertips independently from drawing. The detector accepts a smaller starting separation, preserves an approaching/centered-hand candidate during brief overlap, and confirms it when both hands reappear. Cooldown still requires hands to separate before rearming. `node tests/fog-clap.test.cjs` replays ten synthetic gesture scenarios plus gesture/drawing filtering; these checks do not measure real-camera accuracy.
+
+
+### v0.7.4 — Stable artwork size
+Reserve fixed status/gesture text rows, a fixed controls column, and camera/tool button widths so live text wrapping cannot resize the canvas. The browser fixture at `tests/fog-layout.html` checks six UI states at five iframe sizes, including visible text and overflow checks.

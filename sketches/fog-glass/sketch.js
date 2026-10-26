@@ -188,7 +188,7 @@ function draw() {
   } else previousMouse = null;
 
   if (millis() - lastDiagnostic > 500) {
-    document.getElementById('diagnostic').textContent = `v0.7.3 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
+    document.getElementById('diagnostic').textContent = `v0.7.4 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
     lastDiagnostic = millis();
   }
   const hint = document.getElementById('gesture-status');
