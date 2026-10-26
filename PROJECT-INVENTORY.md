@@ -6,7 +6,6 @@ Source collection: https://editor.p5js.org/Jeremylym/collections/b3MRGTDb6
 |---|---|---|---|
 | Self Portrait | self portrait | 2.3.2 | [Editor](https://editor.p5js.org/Jeremylym/sketches/tQujCTqIr) |
 | Generative Portrait | Self portrait | 2.3.2 | [Editor](https://editor.p5js.org/Jeremylym/sketches/I4KBEj1a1) |
-| Portrait in Motion | portrait | 2.3.3 | [Editor](https://editor.p5js.org/Jeremylym/sketches/nJwP0IJkB) |
 | Particle Network | Jeremy work3 | 2.3.2 | [Editor](https://editor.p5js.org/Jeremylym/sketches/xSAf7nBqZ) |
 | Particle Brush | Jeremy assignment3 | 2.3.2 | [Editor](https://editor.p5js.org/Jeremylym/sketches/q9yrpQBSG) |
 | DADA Collage | Assignment4 | 2.3.4 | [Editor](https://editor.p5js.org/Jeremylym/sketches/U3Hd-DtXm) |
