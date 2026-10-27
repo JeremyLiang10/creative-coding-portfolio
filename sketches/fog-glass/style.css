@@ -15,16 +15,17 @@ footer { display: flex; justify-content: space-between; align-items: center; gap
 footer > div:first-child { flex: 1 1 0; min-width: 0; }
 footer p { font-size: 13px; line-height: 1.6; height: 3.2em; margin: 0 0 5px; overflow: auto; overflow-wrap: anywhere; }
 footer #status { height: 4.8em; }
-.actions { flex: 0 0 52%; min-width: 0; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
-button { color: #e2edf0; background: #263a47; border: 1px solid #617784; border-radius: 4px; padding: 10px 13px; cursor: pointer; white-space: nowrap; }
-#camera-button { width: 116px; }
-#tool-button { width: 232px; }
+.actions { position: absolute; z-index: 3; left: 10px; right: 10px; bottom: 10px; width: fit-content; max-width: calc(100% - 20px); margin-inline: auto; display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap; padding: 6px; background: rgba(20, 35, 44, .9); border: 1px solid rgba(191, 218, 228, .32); border-radius: 7px; }
+button { color: #e2edf0; background: #263a47; border: 1px solid #617784; border-radius: 4px; font: inherit; font-size: 11px; padding: 7px 8px; min-height: 32px; cursor: pointer; white-space: nowrap; }
+#camera-button { width: 84px; }
+#tool-button { width: 84px; }
+#reset-button { width: 54px; }
 button:hover { background: #364e5d; }
 button:disabled { opacity: .5; cursor: wait; }
-button:focus-visible, input:focus-visible { outline: 2px solid #f4dbac; outline-offset: 4px; }
-label { font-size: 12px; color: #adbec7; white-space: nowrap; }
+button:focus-visible, input:focus-visible { outline: 2px solid #f4dbac; outline-offset: 2px; }
+label { display: inline-flex; align-items: center; gap: 3px; min-height: 24px; font-size: 11px; color: #adbec7; white-space: nowrap; }
 input { accent-color: #bfdae4; vertical-align: middle; }
-@media (max-width: 720px) { body { padding: 12px; } footer { align-items: start; flex-direction: column; gap: 8px; } footer > div:first-child { flex: none; width: 100%; } .actions { flex: none; width: 100%; } .tag { display: none; } }
+@media (max-width: 720px) { body { padding: 12px; } footer { align-items: start; flex-direction: column; gap: 8px; } footer > div:first-child { flex: none; width: 100%; }  .tag { display: none; } }
 
 .material-badge { position: absolute; z-index: 1; top: 16px; right: 16px; display: grid; gap: 4px; min-width: 112px; padding: 12px 16px; color: #edf5f7; background: rgba(20, 35, 44, .86); border: 1px solid rgba(191, 218, 228, .32); border-radius: 6px; pointer-events: none; }
 .material-label { color: #b7cbd5; font-size: 11px; letter-spacing: .08em; }
@@ -42,5 +43,7 @@ input { accent-color: #bfdae4; vertical-align: middle; }
   footer { padding-top: 8px; gap: 8px; }
   footer p { font-size: 11px; line-height: 1.4; margin-bottom: 3px; }
   #diagnostic { display: none; }
-  button { padding: 8px 10px; }
+
 }
+
+.action-toggles { display: flex; align-items: center; gap: 8px; }

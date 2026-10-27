@@ -31,3 +31,7 @@ Gesture sampling now tolerates lower-confidence side-on hands and off-screen fin
 
 ### v0.7.4 — Stable artwork size
 Reserve fixed status/gesture text rows, a fixed controls column, and camera/tool button widths so live text wrapping cannot resize the canvas. The browser fixture at `tests/fog-layout.html` checks six UI states at five iframe sizes, including visible text and overflow checks.
+
+
+### v0.7.5 — In-canvas controls
+Compact Camera, material, Reset, Preview and Auto fog controls now sit inside the glass. Pointer interaction with the toolbar is excluded from mouse wiping. The tracking preview sits at the upper left, clear of the toolbar. The responsive layout fixture checks that controls remain within the glass at five sizes and six status states. Live camera tracking was not retested.

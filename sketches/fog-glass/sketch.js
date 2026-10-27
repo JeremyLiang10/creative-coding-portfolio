@@ -29,6 +29,8 @@ let nextTrackId = 1;
 const HAND_CONFIRM_FRAMES = 3;
 const HAND_MIN_CONFIDENCE = .75;
 let previousMouse = null;
+let pointerOnControls = false;
+let controlPointerDown = false;
 let cameraReady = false;
 let trackingReady = false;
 let starting = false;
@@ -61,6 +63,12 @@ function setup() {
   document.getElementById('camera-button').addEventListener('click', startCamera);
   document.getElementById('reset-button').addEventListener('click', resetFog);
   document.getElementById('tool-button').addEventListener('click', cycleBrush);
+  const controls = document.querySelector('.actions');
+  controls.addEventListener('pointerenter', () => { pointerOnControls = true; });
+  controls.addEventListener('pointerleave', () => { pointerOnControls = false; });
+  controls.addEventListener('pointerdown', () => { controlPointerDown = true; previousMouse = null; });
+  window.addEventListener('pointerup', () => { controlPointerDown = false; });
+  window.addEventListener('pointercancel', () => { controlPointerDown = false; });
 }
 
 async function startCamera() {
@@ -114,14 +122,14 @@ async function startCamera() {
     inferenceCount = 0;
     trackingReady = true;
     detectFrame();
-    button.textContent = 'Tracking active';
+    button.textContent = 'Camera on';
   } catch (error) {
     const message = error.name === 'NotAllowedError' ? 'Camera access was denied. Allow access and retry.'
       : error.name === 'NotFoundError' ? 'No camera found. Connect a camera and retry.'
       : error.name === 'NotReadableError' ? 'Camera unavailable. Another app may be using it.'
       : error.message;
     setStatus(`${message} You can still click and drag to draw.`);
-    button.textContent = 'Retry camera';
+    button.textContent = 'Retry';
   } finally {
     starting = false;
     button.disabled = trackingReady;
@@ -180,7 +188,7 @@ function draw() {
     }
   }
 
-  if (mouseIsPressed && mouseX >= 0 && mouseX <= W && mouseY >= 0 && mouseY <= H) {
+  if (mouseIsPressed && !pointerOnControls && !controlPointerDown && mouseX >= 0 && mouseX <= W && mouseY >= 0 && mouseY <= H) {
     const point = { x: mouseX, y: mouseY };
     paint(point, previousMouse);
     previousMouse = point;
@@ -188,7 +196,7 @@ function draw() {
   } else previousMouse = null;
 
   if (millis() - lastDiagnostic > 500) {
-    document.getElementById('diagnostic').textContent = `v0.7.4 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
+    document.getElementById('diagnostic').textContent = `v0.7.5 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
     lastDiagnostic = millis();
   }
   const hint = document.getElementById('gesture-status');
@@ -212,7 +220,7 @@ function draw() {
   if (trackingReady) {
     if (clap.phase === 'closing' || clap.phase === 'contact') setStatus('Clap gesture in progress · Bring your hands together to switch tools.');
     else if (!inferenceCount) setStatus('Model ready. Starting hand tracking…');
-    else if (millis() - lastDetection > 5000) setStatus('Tracking is slow. Check the camera preview in the lower-left corner.');
+    else if (millis() - lastDetection > 5000) setStatus('Tracking is slow. Check the camera preview in the upper-left corner.');
     else setStatus(activeTracks.length ? `${activeTracks.length} hand(s) confirmed · Wipe with your index fingers. Clap to switch tools.` : 'Tracking active · Show one or both hands fully and hold still briefly before moving.');
   }
 }
@@ -235,7 +243,7 @@ async function detectFrame() {
     handPose = null;
     const button = document.getElementById('camera-button');
     button.disabled = false;
-    button.textContent = 'Retry tracking';
+    button.textContent = 'Retry';
     setStatus(`Tracking stopped: ${error.message} Click to retry.`);
     console.error('HandPose detection failed:', error);
   }
@@ -394,7 +402,9 @@ function cycleBrush() {
   for (const track of handTracks) track.previous = null;
   previousMouse = null;
   const brush = BRUSHES[brushIndex];
-  document.getElementById('tool-button').textContent = `Tool: ${brush.name} · Clap to switch`;
+  const toolButton = document.getElementById('tool-button');
+  toolButton.textContent = brush.name;
+  toolButton.setAttribute('aria-label', `Switch material: ${brush.name}`);
   document.getElementById('material-name').textContent = brush.name;
   document.getElementById('material-description').textContent = brush.description;
   const toast = document.getElementById('material-toast');
@@ -479,7 +489,7 @@ function drawGlass() {
 }
 
 function drawTrackingPreview(tracks) {
-  const x = 18, y = H - 142, w = 160, h = 120;
+  const x = 18, y = 18, w = 160, h = 120;
   push();
   translate(x + w, y);
   scale(-1, 1);
