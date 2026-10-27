@@ -39,3 +39,4 @@ The classroom page uses a bounded viewport layout and ResizeObserver to fit the 
 
 ## Portrait framing adjustment
 Self Portrait retains its original 500×500 canvas. Generative Portrait uses an 800×600 canvas so its fixed-coordinate eyes remain balanced. Both canvases are centered and scaled proportionally within the available viewport using sketch-local CSS. Classroom originals are unchanged. Portrait in Motion was removed from the portfolio at the owner’s request.
+- Fog Glass portfolio presentation: removed the introductory instruction line and added a fullscreen toggle around the existing sketch, with an exit button and Escape support. Classroom interaction code is unchanged.
