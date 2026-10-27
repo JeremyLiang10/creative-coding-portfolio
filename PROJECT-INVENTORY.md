@@ -42,3 +42,5 @@ Self Portrait retains its original 500×500 canvas. Generative Portrait uses an 
 - Fog Glass portfolio presentation: removed the introductory instruction line and added a fullscreen toggle around the existing sketch, with an exit button and Escape support. Classroom interaction code is unchanged.
 
 - Fog Glass v0.7.5: compact in-canvas controls; pointer exclusion for toolbar clicks; tracking preview moved above controls.
+
+- Fog Glass v0.7.6: glass-only cover fullscreen, in-artwork exit and transparent glass controls/material surfaces.

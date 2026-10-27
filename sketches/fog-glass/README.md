@@ -35,3 +35,7 @@ Reserve fixed status/gesture text rows, a fixed controls column, and camera/tool
 
 ### v0.7.5 — In-canvas controls
 Compact Camera, material, Reset, Preview and Auto fog controls now sit inside the glass. Pointer interaction with the toolbar is excluded from mouse wiping. The tracking preview sits at the upper left, clear of the toolbar. The responsive layout fixture checks that controls remain within the glass at five sizes and six status states. Live camera tracking was not retested.
+
+
+### v0.7.6 — Glass-only fullscreen
+Fullscreen hides the surrounding title, instructions and outer toolbar, and fills the viewport with an undistorted cover crop of the glass. Exit is available inside the artwork toolbar or through Escape. Controls, material badge and toast now have transparent glass surfaces. The preview stays within the visible crop. Camera accuracy was not remeasured.

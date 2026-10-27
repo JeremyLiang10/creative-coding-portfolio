@@ -8,6 +8,13 @@
     const active = expanded();
     button.textContent = active ? 'Exit fullscreen ↙' : 'Fullscreen ↗';
     button.setAttribute('aria-pressed', String(active));
+    stage.classList.toggle('artwork-expanded', active);
+    const sketch = frame.contentDocument;
+    if (sketch?.body) {
+      sketch.body.classList.toggle('artwork-fullscreen', active);
+      const exitButton = sketch.getElementById('exit-fullscreen');
+      if (exitButton) exitButton.hidden = !active;
+    }
   }
   function setFallback(active) {
     stage.classList.toggle('is-expanded', active);
@@ -42,5 +49,7 @@
   // The artwork has its own document, so Escape must also work with iframe focus.
   frame.addEventListener('load', () => {
     frame.contentDocument?.addEventListener('keydown', escapeFallback);
+    frame.contentDocument?.getElementById('exit-fullscreen')?.addEventListener('click', () => button.click());
+    syncButton();
   });
 })();

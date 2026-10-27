@@ -47,3 +47,30 @@ input { accent-color: #bfdae4; vertical-align: middle; }
 }
 
 .action-toggles { display: flex; align-items: center; gap: 8px; }
+
+/* Transparent glass overlays keep the scene visible behind every control. */
+.actions, .material-badge, .material-toast {
+  background: rgba(18, 40, 51, .12);
+  border-color: rgba(236, 250, 255, .42);
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  backdrop-filter: blur(8px) saturate(110%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18);
+  color: #f5fbff;
+  text-shadow: 0 1px 3px rgba(8, 28, 39, .65);
+}
+.actions button { background: rgba(235, 250, 255, .04); border-color: rgba(236, 250, 255, .38); color: inherit; text-shadow: inherit; }
+.actions button:hover { background: rgba(235, 250, 255, .18); }
+.actions label, .material-label, #material-description { color: #edf7fc; }
+.material-badge { padding: 10px 13px; gap: 3px; }
+.material-label { font-size: 10px; }
+.material-badge strong { font-size: 18px; }
+#material-description { font-size: 11px; }
+button[hidden] { display: none; }
+/* Only the glass is visible in artwork fullscreen mode. Cover, never stretch. */
+body.artwork-fullscreen { padding: 0; }
+.artwork-fullscreen main { width: 100%; grid-template-rows: minmax(0, 1fr); }
+.artwork-fullscreen header, .artwork-fullscreen footer { display: none; }
+.artwork-fullscreen .canvas-space { width: 100%; height: 100%; }
+.artwork-fullscreen #canvas-holder { width: 100%; height: 100%; border: 0; border-radius: 0; }
+.artwork-fullscreen canvas { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: max(100vw, 133.333333vh) !important; max-width: none; }
+.artwork-fullscreen .actions { bottom: max(12px, env(safe-area-inset-bottom)); }

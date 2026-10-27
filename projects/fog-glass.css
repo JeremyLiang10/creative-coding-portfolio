@@ -19,3 +19,6 @@ html.fog-expanded { overflow: hidden; }
 .fog-project > header nav a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; line-height: 16px; white-space: nowrap; }
 .fog-project > header nav a span { display: block; line-height: inherit; }
 .fog-project .nav-arrow { display: block; flex: 0 0 12px; width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.fog-project #fog-stage.artwork-expanded { grid-template-rows: minmax(0, 1fr); }
+.fog-project .artwork-expanded .fog-toolbar { display: none; }

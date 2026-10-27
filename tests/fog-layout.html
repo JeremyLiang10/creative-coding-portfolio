@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><title>Fog Glass layout regression</title>
 <style>body{font:14px monospace;background:#111;color:#eee}iframe{display:block;border:0}pre{white-space:pre-wrap}</style>
 <h1>Fog Glass: changing status must not resize the canvas</h1><pre id="result">Running…</pre>
-<iframe title="Layout test" src="../sketches/fog-glass/index.html?v=controls-1"></iframe>
+<iframe title="Layout test" src="../sketches/fog-glass/index.html?v=glass-1"></iframe>
 <script>
 // Development fixture only: pause animation, cycle actual UI text and tools,
 // and check the resulting browser layout. No camera or model is started.
@@ -23,13 +23,16 @@
    ['Tracking is slow. Check the camera preview in the lower-left corner.','Switched to Squeegee. Move your index finger to try it.','Retry']
   ];
   const results=[];
+  for(const fullscreen of [false,true]) {
+   d.body.classList.toggle('artwork-fullscreen',fullscreen);
+   d.querySelector('#exit-fullscreen').hidden=!fullscreen;
   for(const [width,height] of [[1186,538],[874,538],[720,540],[334,632],[1280,720]]){
    frame.style.width=width+'px';frame.style.height=height+'px';await wait();
    let baseline;
    for(const [i,[status,gesture,camera]] of states.entries()){
     d.querySelector('#status').textContent=status;d.querySelector('#gesture-status').textContent=gesture;
     d.querySelector('#camera-button').textContent=camera;
-    d.querySelector('#diagnostic').textContent='v0.7.5 · Camera connected · 123456 frames processed · 2 / 2 hands confirmed · 1500ms';
+    d.querySelector('#diagnostic').textContent='v0.7.6 · Camera connected · 123456 frames processed · 2 / 2 hands confirmed · 1500ms';
     d.querySelector('#tool-button').click();await wait();
     const holder=d.querySelector('#canvas-holder').getBoundingClientRect(),bar=d.querySelector('.actions').getBoundingClientRect();
     if(bar.left<holder.left||bar.right>holder.right||bar.bottom>holder.bottom||bar.top<holder.top)throw Error(`${width}×${height}: controls outside glass`);
@@ -42,7 +45,8 @@
      if(getComputedStyle(p).display!=='none' && p.scrollHeight>p.clientHeight+1)throw Error(`${width}×${height}: clipped text ${p.id}`);
     }
    }
-   results.push(`PASS ${width}×${height}: 6 states, identical canvas and footer bounds, no overflow`);
+   results.push(`PASS ${fullscreen ? "glass fullscreen" : "normal"} ${width}×${height}: 6 states, identical canvas and footer bounds, no overflow`);
+  }
   }
   out.textContent=results.join('\n');out.dataset.status='passed';
  }catch(e){out.textContent='FAIL '+e.message;out.dataset.status='failed';}

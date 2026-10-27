@@ -29,6 +29,7 @@ let nextTrackId = 1;
 const HAND_CONFIRM_FRAMES = 3;
 const HAND_MIN_CONFIDENCE = .75;
 let previousMouse = null;
+let visibleCanvasOrigin = { x: 0, y: 0 };
 let pointerOnControls = false;
 let controlPointerDown = false;
 let cameraReady = false;
@@ -44,6 +45,14 @@ function setup() {
   const holder = document.getElementById('canvas-holder');
   const fitCanvas = () => {
     const available = canvasSpace.getBoundingClientRect();
+    if (document.body.classList.contains('artwork-fullscreen')) {
+      holder.style.width = `${available.width}px`;
+      const scale = Math.max(available.width / W, available.height / H);
+      visibleCanvasOrigin = { x: (W - available.width / scale) / 2,
+        y: (H - available.height / scale) / 2 };
+      return;
+    }
+    visibleCanvasOrigin = { x: 0, y: 0 };
     const displayWidth = Math.max(0, Math.floor(Math.min(available.width - 2, (available.height - 2) * W / H)));
     holder.style.width = `${displayWidth + 2}px`;
   };
@@ -196,7 +205,7 @@ function draw() {
   } else previousMouse = null;
 
   if (millis() - lastDiagnostic > 500) {
-    document.getElementById('diagnostic').textContent = `v0.7.5 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
+    document.getElementById('diagnostic').textContent = `v0.7.6 · ${cameraReady ? 'Camera connected' : 'Waiting for camera'} · ${inferenceCount} frames processed · ${activeTracks.length} / 2 hands confirmed${inferenceCount ? ` · ${inferenceMs}ms` : ''}`;
     lastDiagnostic = millis();
   }
   const hint = document.getElementById('gesture-status');
@@ -489,7 +498,7 @@ function drawGlass() {
 }
 
 function drawTrackingPreview(tracks) {
-  const x = 18, y = 18, w = 160, h = 120;
+  const x = visibleCanvasOrigin.x + 18, y = visibleCanvasOrigin.y + 18, w = 160, h = 120;
   push();
   translate(x + w, y);
   scale(-1, 1);
