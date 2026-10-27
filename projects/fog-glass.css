@@ -13,3 +13,9 @@
 .fog-project #fog-stage:is(:fullscreen, :-webkit-full-screen, .is-expanded) { width: 100%; height: 100%; min-height: 0; max-height: none; margin: 0; border: 0; background: #141e25; }
 .fog-project #fog-stage.is-expanded { position: fixed; inset: 0; z-index: 1000; }
 html.fog-expanded { overflow: hidden; }
+
+/* Use identical text line boxes and icon bounds for both navigation links. */
+.fog-project > header nav { align-items: center; }
+.fog-project > header nav a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; line-height: 16px; white-space: nowrap; }
+.fog-project > header nav a span { display: block; line-height: inherit; }
+.fog-project .nav-arrow { display: block; flex: 0 0 12px; width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
