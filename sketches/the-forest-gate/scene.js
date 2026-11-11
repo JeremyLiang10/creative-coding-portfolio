@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { createGlowingPlants } from './plants.js';
+import { createPineDetails } from './pine-details.js';
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#17232a');
-scene.fog = new THREE.Fog('#17232a', 9, 24);
+scene.fog = new THREE.Fog('#17232a', 11, 28);
 
 const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 100);
 camera.position.set(2.5, 2.1, 8.4);
@@ -80,10 +82,14 @@ function pine(x, z, height) {
 }
 
 // Leave a clearing in the middle so the gate stays visible.
-pine(-3.4, 1.0, 4.5);
-pine(3.7, 2.1, 4.8);
-pine(-2.8, -1.7, 3.8);
-pine(2.8, -0.9, 3.7);
+const frontPines = [
+  [-3.4, 1.0, 4.5],
+  [3.7, 2.1, 4.8],
+  [-2.8, -1.7, 3.8],
+  [2.8, -0.9, 3.7]
+];
+for (const tree of frontPines) pine(...tree);
+scene.add(createPineDetails(THREE, frontPines));
 pine(-4.9, -3.9, 4.9);
 pine(4.9, -3.6, 4.9);
 pine(-2.2, -4.6, 4.3);
@@ -104,11 +110,11 @@ const portalMaterial = new THREE.MeshBasicMaterial({
   color: '#ae68ff',
   side: THREE.DoubleSide,
   transparent: true,
-  opacity: 0.76
+  opacity: 0.90
 });
 addMesh(new THREE.PlaneGeometry(1.48, 2.15), portalMaterial, 0, 1.195, -0.22);
 
-const portalLight = new THREE.PointLight('#bf68ff', 9, 5);
+const portalLight = new THREE.PointLight('#bf68ff', 17, 5);
 portalLight.position.set(0, 0.95, 0.4);
 scene.add(portalLight);
 
@@ -118,8 +124,10 @@ box(1.10, 0.10, 0.58, pathStone, 0, 0.15, 0.55).rotation.y = 0.05;
 box(1.02, 0.10, 0.54, pathStone, 0.09, 0.15, 1.38).rotation.y = -0.12;
 box(1.18, 0.10, 0.60, pathStone, 0.29, 0.15, 2.25).rotation.y = 0.13;
 
-scene.add(new THREE.HemisphereLight('#d9dfff', '#8a80a4', 1.65));
-const moonlight = new THREE.DirectionalLight('#d1dfff', 2.2);
+scene.add(createGlowingPlants(THREE));
+
+scene.add(new THREE.HemisphereLight('#d9dfff', '#8a80a4', 1.85));
+const moonlight = new THREE.DirectionalLight('#d1dfff', 2.3);
 moonlight.position.set(-3, 6, 4);
 scene.add(moonlight);
 
@@ -159,7 +167,7 @@ renderer.setAnimationLoop((time) => {
   if (soldierMixer && !reducedMotion.matches) soldierMixer.update(delta);
 
   const pulse = reducedMotion.matches ? 0 : Math.sin(time * 0.002);
-  portalMaterial.opacity = 0.76 + pulse * 0.1;
-  portalLight.intensity = 9 + pulse * 2;
+  portalMaterial.opacity = 0.90 + pulse * 0.06;
+  portalLight.intensity = 17 + pulse * 3;
   renderer.render(scene, camera);
 });
