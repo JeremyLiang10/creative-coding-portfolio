@@ -58,5 +58,15 @@
     "tags": "HAND TRACKING / INTERACTION",
     "p5": "1.11.11",
     "source": "https://github.com/JeremyLiang10/creative-coding-portfolio/tree/main/sketches/fog-glass"
+  },
+  {
+    "id": "the-forest-gate",
+    "slug": "the-forest-gate",
+    "title": "The Forest Gate",
+    "originalName": "The Forest Gate",
+    "description": "Follow a dirt path to a violet gate in a forest clearing. Drag to look around.",
+    "tags": "3D SCENE / THREE.JS",
+    "three": "0.180.0",
+    "source": "https://github.com/JeremyLiang10/creative-coding-portfolio/tree/main/sketches/the-forest-gate"
   }
 ]

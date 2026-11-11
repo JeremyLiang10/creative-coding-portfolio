@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Forest Gate</title>
+  <style>
+    body { margin: 0; background: #17232a; color: #e8e7f4; }
+    canvas { display: block; }
+    .caption { position: absolute; top: 6vh; left: 6vw; pointer-events: none; }
+    h1 { margin: 0 0 8px; font: normal clamp(26px, 4vw, 42px) Georgia, serif; }
+    p { margin: 0; color: #bdbbd5; font: 13px system-ui, sans-serif; }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="caption">
+    <h1>The Forest Gate</h1>
+    <p>Drag to look around</p>
+  </div>
+  <script type="module" src="./scene.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Yuming Liang — Creative Coding I
 
-A simple static coursework portfolio with seven p5.js coursework sketches.
+A static coursework portfolio for p5.js sketches and a Three.js scene.
 
 ## View
 
@@ -11,12 +11,14 @@ https://JeremyLiang10.github.io/creative-coding-portfolio/
 From this folder, run `python3 -m http.server 8000`, then open http://localhost:8000/.
 No build step or package installation is required.
 
+Open `http://localhost:8000/sketches/the-forest-gate/` to preview The Forest Gate on its own. You can use the same URL in Codex's built-in browser. The scene needs an internet connection to load Three.js and the example character.
+
 ## Files
 
 - `index.html`: gallery, descriptions, and project links
 - `projects/`: seven static project detail pages
 - `style.css`: dark responsive layout
-- `images/`: six runtime screenshots and an illustrated Fog Glass cover
+- `images/`: project covers and runtime screenshots
 - `sketches/`: seven independent sketches and collage assets
 - `vendor/`: matching p5.js runtimes
 - `projects.json`: project metadata and original source links
@@ -34,4 +36,4 @@ Layout reference: https://languel.github.io/portfolio-example/ (implemented inde
 
 ## Fog Glass classroom addition
 
-The seventh project includes the English v0.7.1 classroom interface, camera hand tracking, three wiping tools, and slow-moving water droplets. Camera access is delegated by the project iframe; a standalone link is provided as an alternative. Its cover is an illustration, not a screenshot. See `sketches/fog-glass/README.md` for interaction, dependency provenance, and current verification limits.
+Fog Glass includes the English classroom interface, camera hand tracking, three wiping tools, and slow-moving water droplets. Camera access is delegated by the project iframe; a standalone link is provided as an alternative. Its cover is an illustration, not a screenshot. See `sketches/fog-glass/README.md` for interaction, dependency provenance, and current verification limits.

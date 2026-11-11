@@ -44,3 +44,9 @@ Self Portrait retains its original 500×500 canvas. Generative Portrait uses an 
 - Fog Glass v0.7.5: compact in-canvas controls; pointer exclusion for toolbar clicks; tracking preview moved above controls.
 
 - Fog Glass v0.7.6: glass-only cover fullscreen, in-artwork exit and transparent glass controls/material surfaces.
+
+## The Forest Gate
+
+- A Three.js classroom scene developed locally with Codex assistance. The detail page embeds the standalone sketch and includes a full-size link.
+- The Three.js runtime is pinned to 0.180.0. The Mixamo Soldier model and its idle animation load from the [Three.js r180 example asset](https://github.com/mrdoob/three.js/blob/r180/examples/models/gltf/Soldier.glb).
+- The gallery cover is a screenshot of the scene.
